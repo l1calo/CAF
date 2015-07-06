@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block bootstrap3_content %}
+<div class="container-fluid">
+<div class="page-header">
+  <h1>CAF</h1>
+</div>
+
+<div class="row">
+<div class="col-md-12">
+<table class="table table-condensed">
+<thead>
+<tr>
+	<th>#Job</th>
+	<th>#Run</th>
+	<th>#Events</th>
+	<th>Partition</th>
+	<th>RunType</th>
+	<th>Analysis</th>
+	<th>Status</th>
+	<th>Plots and Files</th>
+	<th>Logs</th>
+</tr>
+</thead>
+{% for row in rows %}
+<tr>
+	<td>{{row.job.id}}</td>
+	<td>{{row.job.Run.RunNumber}}</td>
+	<td>{{row.job.Run.RecordedEvents}}</td>
+	<td>{{row.job.Run.PartitionName}}</td>
+	<td>{{row.job.Run.Type.Name}}</td>
+	<td>{{row.job.Analysis.Name}}</td>
+	<td>{{row.job.Status}}</td>
+	<td>
+		{% for file in row.files %}
+		<a href="{% url 'job-file' jobid=row.job.id file=file.name %}" target="_blank">{{file.title}}</a>
+		{% endfor %}
+	</td>
+	<td>
+		<a href="{% url 'job-file' jobid=row.job.id file='stdout.log' %}" target="_blank">out</a>
+		<a href="{% url 'job-file' jobid=row.job.id file='stderr.log' %}" target="_blank">err</a>
+	</td>
+</tr>
+{% endfor %}
+</table>
+</div>
+</div>
+
+{% endblock %}
