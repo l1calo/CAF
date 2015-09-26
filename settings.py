@@ -1,6 +1,6 @@
 import os
-DEBUG = True
-TEMPLATE_DEBUG = True
+DEBUG = False
+TEMPLATE_DEBUG = DEBUG
 ALLOWED_HOSTS = []
 #INTERNAL_IPS = ['127.0.0.1']
 BASE_DIR = os.path.join(os.path.dirname(__file__))
@@ -182,7 +182,7 @@ CAF_SCANS = {
             "cleanstop": True,
             "hasevents": False,
             "minevents": 1700,
-            "initialrun": 266242,
+            "initialrun": 272549,
             "fileslocations": [
               "/castor/cern.ch/grid/atlas/DAQ/l1calo/#RUN_NUMBER_PADDED",
               "/castor/cern.ch/grid/atlas/DAQ/l1calo/#RUN_NUMBER#",
@@ -217,7 +217,7 @@ CAF_SCANS = {
             "cleanstop": True,
             "hasevents": False,
             "minevents": 1700,
-            "initialrun": 266242,
+            "initialrun": 272549,
             "fileslocations": [
               "/castor/cern.ch/grid/atlas/DAQ/l1calo/#RUN_NUMBER_PADDED",
               "/castor/cern.ch/grid/atlas/DAQ/l1calo/#RUN_NUMBER#",
@@ -250,7 +250,7 @@ CAF_SCANS = {
             "cleanstop": True,
             "hasevents": True,
             "minevents": 1700,
-            "initialrun": 266242,
+            "initialrun": 272549,
             "fileslocations": [
               "/castor/cern.ch/grid/atlas/DAQ/l1calo/#RUN_NUMBER_PADDED",
               "/castor/cern.ch/grid/atlas/DAQ/l1calo/#RUN_NUMBER#",
@@ -284,7 +284,7 @@ CAF_SCANS = {
             "cleanstop": True,
             "hasevents": True,
             "minevents": 0,
-            "initialrun": 266242,
+            "initialrun": 272549,
             "fileslocations": [
               "/castor/cern.ch/grid/atlas/DAQ/l1calo/#RUN_NUMBER_PADDED",
               "/castor/cern.ch/grid/atlas/DAQ/l1calo/#RUN_NUMBER#",
@@ -320,7 +320,7 @@ CAF_SCANS = {
             "cleanstop": True,
             "hasevents": False,
             "minevents": 0,
-            "initialrun": 266242,
+            "initialrun": 272549,
             "fileslocations": [
               "/castor/cern.ch/grid/atlas/DAQ/l1calo/#RUN_NUMBER_PADDED",
               "/castor/cern.ch/grid/atlas/DAQ/l1calo/#RUN_NUMBER#",
@@ -353,7 +353,7 @@ CAF_SCANS = {
             "cleanstop": True,
             "hasevents": True,
             "minevents": 0,
-            "initialrun": 266242,
+            "initialrun": 272549,
             "fileslocations": [
               "/eos/atlas/atlastier0/rucio/data15_calib/calibration_L1CaloPmtScan/{run_number}",
               "/eos/atlas/atlastier0/rucio/data15_calib/calibration_L1CaloEnergyScan/{run_number}"
@@ -386,7 +386,7 @@ CAF_SCANS = {
             "cleanstop": True,
             "hasevents": True,
             "minevents": 0,
-            "initialrun": 266242,
+            "initialrun": 272549,
             "fileslocations": [
               "/castor/cern.ch/grid/atlas/DAQ/l1calo/#RUN_NUMBER_PADDED",
               "/castor/cern.ch/grid/atlas/DAQ/l1calo/#RUN_NUMBER#",

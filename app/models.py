@@ -17,6 +17,7 @@ class Run(models.Model):
     RunType = models.TextField()
     RecordedEvents = models.IntegerField()
     PartitionName = models.TextField()
+    GainStrategy = models.TextField()
  
     Created = models.DateTimeField(auto_now_add=True)
     Updated = models.DateTimeField(auto_now=True)

@@ -23,7 +23,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        selector = Selector(settings.CAF_SCANS["tdaqdbname"])
+        selector = Selector(settings.CAF_SCANS["tdaqdbname"],
+                            settings.CAF_SCANS["trigdbname"])
 
         for scan in settings.CAF_SCANS["scans"]:
             if not 'analyses' in scan:
@@ -66,14 +67,16 @@ class Command(BaseCommand):
                         raw_folder = None
                         for run_folder in run_folders:
                             if run_folder[:-1].endswith("RAW"):
-                                raw_folder = os.path.join(folder, run_folder[:-1])
+                                raw_folder = os.path.join(
+                                    folder, run_folder[:-1])
                                 break
                         print(raw_folder)
                         if raw_folder:
                             file_names = eos.ls(raw_folder)
                             if file_names:
                                 file_names = [
-                                    "%s/%s/%s" % (settings.CAF_EOS_PREFIX, raw_folder, f[:-1])
+                                    "%s/%s/%s" % (settings.CAF_EOS_PREFIX,
+                                                  raw_folder, f[:-1])
                                     for f in file_names
                                 ]
                             break
@@ -104,8 +107,8 @@ class Command(BaseCommand):
                     if not run.Analyses.filter(id=analysis.id):
                         run.Analyses.add(analysis)
 
-                run.save()
-
+                    # run.save()
+                run.delete()
             if runs:
                 logger.info("Runs: %s" %
                             str(sorted(runs.keys(), reverse=True)))

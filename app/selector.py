@@ -19,16 +19,22 @@ class Selector(object):
     cooll1calopath = '/TRIGGER/L1Calo/V1/Conditions'
     coolstrategypath = '/TRIGGER/Receivers/Conditions'
 
-    def __init__(self, cool_tdaq, oracle=False):
+    def __init__(self, cool_tdaq, cool_trig, oracle=False):
         self.filter = {}
         try:
             self.cool_tdaq = AtlCoolLib.indirectOpen(
                 cool_tdaq, True, oracle, debug=True
             )
+            self.cool_trig = AtlCoolLib.indirectOpen(
+                cool_trig, True, oracle, debug=True
+            )
         except Exception:
             logging.exception("Could not open cool database")
             return
         logging.info("Connected to {0}".format(cool_tdaq))
+
+        self.mintime = cool.ValidityKeyMin
+        self.maxtime = cool.ValidityKeyMax
 
     def _filter_by_sor(self, payload):
         res = True
@@ -143,11 +149,39 @@ class Selector(object):
             if run in runlist:
                 runlist[run].update(payload_to_dict(payload))
         itr.close()
+
+        # =====================================================================
+        # Gain strategy
+        # =====================================================================
+        gain_list = list()
+        folder_gains = self.cool_trig.getFolder(
+            '{}/Strategy'.format(self.coolstrategypath)
+        )
+        itr = folder_gains.browseObjects(self.mintime, self.maxtime,
+                                         cool.ChannelSelection(0, 1))
+        current = -1
+        while itr.goToNext():
+            obj = itr.currentRef()
+            if obj.since() != current:
+                gain_list.append(
+                    {
+                        'since': obj.since(),
+                        'until': obj.until(),
+                        'payload': obj.payload()['name']
+                    }
+                )
+                current = obj.since()
+        #logging.info("Gain list %s" % str(gain_list))
         # =====================================================================
         #logging.info("Runs before selection:  %i" % len(runlist))
         for run in list(runlist.iterkeys()):
             if not self._filter(runlist[run]):
                 del runlist[run]
+            else:
+                for gain in sorted(gain_list):
+                    if gain['since'] <= runlist[run]['SORTime'] <= gain['until']:
+                        runlist[run]['GainStrategy'] = gain['payload']
+
         #logging.info("Runs after selection:  %i" % len(runlist))
         # =====================================================================
         return runlist
